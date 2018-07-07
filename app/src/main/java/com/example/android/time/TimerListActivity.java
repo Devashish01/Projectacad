@@ -41,7 +41,7 @@ public class TimerListActivity extends AppCompatActivity {
         try{
 
             SQLiteDatabase db=this.openOrCreateDatabase("notesDB",MODE_PRIVATE,null);
-            Cursor c=db.rawQuery("select * from list ",null);
+            Cursor c=db.rawQuery("select * from list2",null);
             int noteIndex= c.getColumnIndex("notetext");
             int noteIndex1= c.getColumnIndex("notext");
             int noteIndex2= c.getColumnIndex("notext1");
@@ -50,9 +50,9 @@ public class TimerListActivity extends AppCompatActivity {
 
                 Log.i("Notes",c.getString(noteIndex));
                 Log.i("Notes1",c.getString(noteIndex1));
-              //  notes.add("c.getString(noteIndex");
-                notes.add(c.getString(noteIndex)+" timer"+j+" "+c.getString(noteIndex2));
-               // notes.add(date+" timer"+j+" "+c.getString(noteIndex1));
+                //  notes.add("c.getString(noteIndex");
+                notes.add(c.getString(noteIndex)+" timer"+c.getString(noteIndex1)+" "+c.getString(noteIndex2));
+                // notes.add(date+" timer"+j+" "+c.getString(noteIndex1));
                 c.moveToNext();
                 j++;
             }
@@ -63,7 +63,7 @@ public class TimerListActivity extends AppCompatActivity {
 
             arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,notes);
             listView.setAdapter(arrayAdapter);
-          //  arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2,notes1);
+            //  arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2,notes1);
             //listView.setAdapter(arrayAdapter);
         }
 

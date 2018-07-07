@@ -1,21 +1,20 @@
-
 package com.example.android.time;
 
-        import android.content.Intent;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.media.MediaPlayer;
-        import android.net.Uri;
-        import android.os.CountDownTimer;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.*;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.*;
 
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TimerActivity extends AppCompatActivity {
     String age;
@@ -58,15 +57,22 @@ public class TimerActivity extends AppCompatActivity {
                 if(ss<10) {
                     ab2 = Integer.toString(m) + ":0" + Integer.toString(ss);
                 }
-                    else {
+                else {
                     ab2 = Integer.toString(m) + ":" + Integer.toString(ss);
                     // cout<<m<<":"<<ss;
                 }
             }
             else if(sub<60)
             {
-                ab2 ="0:" + Integer.toString(sub);
-                //cout<<"0:"<<sub;
+                if(sub<10) {
+                    ab2 = "0:0" + Integer.toString(sub);
+                    //cout<<"0:"<<sub;
+                }
+                else
+                {
+                    ab2 = "0:" + Integer.toString(sub);
+
+                }
             }
 
 
@@ -74,9 +80,9 @@ public class TimerActivity extends AppCompatActivity {
 
 
             SQLiteDatabase db = this.openOrCreateDatabase("notesDB", MODE_PRIVATE, null);
-            db.execSQL("create table if not exists list (notetext VARCHAR,notext VARCHAR,notext1 VARCHAR)");
+            db.execSQL("create table if not exists list2 (notetext VARCHAR,notext INTEGER PRIMARY KEY AUTOINCREMENT,notext1 VARCHAR)");
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            db.execSQL("insert into list values('" + date + "','" + age + "','" + ab2 + "')");
+            db.execSQL("insert into list2(notetext,notext1) values('" + date + "', '"+ ab2 + "')");
             Log.i(age, "uccess");
             Log.i("notes", "Success");
             Toast.makeText(getApplicationContext(), "Notes added successfully", Toast.LENGTH_SHORT).show();
@@ -94,9 +100,9 @@ public class TimerActivity extends AppCompatActivity {
 
     public void updateme(int secondsLeft){
 
-       minutes = (int) secondsLeft / 60;
-         seconds = secondsLeft - minutes * 60;
-            count++;
+        minutes = (int) secondsLeft / 60;
+        seconds = secondsLeft - minutes * 60;
+        count++;
         String secondString = Integer.toString(seconds);
 
         if(seconds <= 9){
@@ -200,15 +206,15 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 a= timerSeekBar.getProgress();
-               // a=a/60;
-                 p1 = a % 60;
-                 p2 = a / 60;
-                 p3 = p2 % 60;
+                // a=a/60;
+                p1 = a % 60;
+                p2 = a / 60;
+                p3 = p2 % 60;
                 p2 = p2 / 60;
                 updateme(progress);
                 ab1=Integer.toString(p3)+":"+Integer.toString(p1);
-               h1=p3;
-               s1=p1;
+                h1=p3;
+                s1=p1;
 
             }
 
